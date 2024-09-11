@@ -2,5 +2,16 @@
 name = "roti-os"
 version = "0.1.0"
 edition = "2021"
+tests = false
 
 [dependencies]
+libc = { version = "0.2.14", default-features = false }
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
+
+[unstable]
+build-std = ["core", "compiler_builtins"]
