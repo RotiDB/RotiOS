@@ -1,0 +1,16 @@
+###################################################
+################# VGA text buffer ################# 
+###################################################
+
+VGA buffer is a 2D array typically with 25 rows and
+80 columns, rendered directly to screen. Each array
+entry is 16 bits
+
+BITS
+0  - 7    → ASCII
+8  - 11   → Foreground Colour
+12 - 14   → Background Color
+15        
+
+0x0 - Black
+0x1 - Blue
