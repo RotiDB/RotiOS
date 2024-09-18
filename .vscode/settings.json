@@ -1,6 +1,4 @@
 {
-    "rust-analyzer.check.overrideCommand": [
-        "./cargo",
-        ""
-    ]
+    "rust-analyzer.check.allTargets": false,
 }
+  
