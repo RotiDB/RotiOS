@@ -2,8 +2,6 @@
 
 ## Compile to Bootable binary using `cargo bootimage`
 
-Currently, we are just following the blod at <https://os.phil-opp.com/>, but we will soon be branching off in our own path.
+NOTE: the files in `src/asm/` are for designing a bootloader. Currently this boots using the BIOS, but this will be rewritten to UEFI soon. 
 
-Generally, this is more or less bootable, but it can't really
-do much, and just writes `Hello World` to the screen using VGA
-buffer
+## Compile `asm` to bootloader using `make`

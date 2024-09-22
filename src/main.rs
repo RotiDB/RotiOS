@@ -11,6 +11,6 @@ pub extern "C" fn _start() -> ! {
     use Color::*;
     let mut writer  = Writer::new(Green, Black);
     writer.write("Hello World!");
-    
+
     loop {}
 }
