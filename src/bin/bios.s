@@ -1,10 +1,9 @@
-
 MEMORY_START equ 0x7C00
 
 org MEMORY_START
 bits 16
 
-%define ENDL 0x0D, 0x0A
+%define ENDL 0xD, 0xA
 
 msg: db 'Hello World', ENDL, 0
 
@@ -30,7 +29,7 @@ puts:
     or al, al
     jz return
 
-    mov ah, 0x0E
+    mov ah, 0xE
     mov bh, 0
     int 0x10
     jmp .puts_loop
@@ -40,4 +39,4 @@ return:
     ret
 
 times 510-($-$$) db 0
-dw 0AA55h
+dw 0xAA55
