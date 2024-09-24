@@ -2,7 +2,7 @@ ASM       := nasm
 SRC_DIR   := src/bin
 BUILD_DIR := target/bin
 NASMFLAGS := -f bin
-PADDING   := 1024k
+PADDING   := 256k
 SRC       := $(notdir $(wildcard $(SRC_DIR)/*))
 BUILD     := $(notdir $(wildcard $(BUILD_DIR)/*))
 
