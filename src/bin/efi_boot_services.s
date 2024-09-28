@@ -1,10 +1,11 @@
+bits 64
+
 verifySignature:
         mov rax, [ptrSystemTable]
         mov rax, [rax + EFI_SYSTEM_TABLE.Hdr + EFI_TABLE_HEADER.Signature]
 
         mov rbx, EFI_SYSTEM_TABLE_SIGNATURE
-        mov rcx, EFI_LOAD_ERROR
-        
+        EFI_ERROR rcx, 1
         cmp rcx, rax
         jne error
 

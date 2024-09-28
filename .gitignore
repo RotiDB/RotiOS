@@ -21,6 +21,6 @@ Cargo.lock
 #.idea/
 
 # Added by cargo
-
+temp/
 /target
-.vscode
+.vscode/

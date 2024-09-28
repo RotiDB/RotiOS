@@ -1,9 +1,9 @@
 EFI_SUCCESS             EQU 0x0
-EFI_LOAD_ERROR          EQU 0x8000000000000001
-EFI_INVALID_PARAMTER    EQU 0x8000000000000002
-EFI_UNSUPPORTED         EQU 0x8000000000000003
-EFI_BAD_BUFFER_SIZE     EQU 0x8000000000000004
-EFI_NOT_FOUND           EQU 0x8000000000000014
+
+%macro EFI_ERROR 2
+    mov %1, 0x800000000000000
+    and %1, %2
+%endmacro
 
 %macro UINTN 0
         resq 0x1
@@ -42,6 +42,11 @@ EFI_NOT_FOUND           EQU 0x8000000000000014
 %macro EFI_HANDLE 0
         resq 0x1
         alignb 0x8
+%endmacro
+
+%macro EFI_EVENT 0
+        resq 0x1
+        alignb 8
 %endmacro
 
 struc EFI_TABLE_HEADER
@@ -169,10 +174,6 @@ struc EFI_MEMORY_DESCRIPTOR
         .NumberOfPages:                         UINT64
         .Attribute:                             UINT64
 endstruc
-
-EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID dd 0x9042a9de
-                                  dw 0x23dc, 0x4a38
-                                  db 0x96, 0x7a, 0xde, 0xd0, 0x80, 0x6a
 
 struc EFI_GRAPHICS_OUTPUT_PROTOCOL_MODE
         .MaxMode:                               UINT32

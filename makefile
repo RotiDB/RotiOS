@@ -11,7 +11,7 @@ all:
 
 .PHONY: all clean info bios uefi
 
-uefi:
+uefi: $(wildcard $(SRC_DIR)/*)
 	@mkdir -p $(BUILD_DIR)
 
 	$(ASM) $(SRC_DIR)/uefi.s ${NASMFLAGS} -o \
