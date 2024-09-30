@@ -1,7 +1,11 @@
 <h1 style = "text-align: center"> RotiOS </h1>
 
-## Compile to Bootable binary using `cargo bootimage`
+## Currently under construction!
 
-NOTE: the files in `src/asm/` are for designing a bootloader. Currently this boots using the BIOS, but this will be rewritten to UEFI soon. 
+At this moment, we are designing a UEFI bootloader, and will then begin working on an actual kernel
 
-## Compile `asm` to bootloader using `make`
+### Steps to build
+1. Install Netwide Assembler: [`nasm`][1]
+2. Build using `make uefi` to build for UEFI
+
+[1]: https://www.nasm.us/pub/nasm/releasebuilds/
