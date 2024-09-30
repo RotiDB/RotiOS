@@ -64,7 +64,7 @@ implemented using the VOIDPOINTER macro
 | UINT64      | 8 bytes  | 8             | Unsigned 64-bit integer
 | INT32       | 4 bytes  | 4             | Signed 32-bit integer
 | CHAR16      | 2 bytes  | 2             | UTF-16 encoded character
-| BOOLEAN     | 4 bytes  | 4             | Unsigned 32-bit integer
+| BOOLEAN     | 1 bytes  | 1             | Boolean (to be used as 0x00 or 0x11)
 | VOIDPOINTER | 8 bytes  | 8             | Generic 64-bit Pointer (placeholder type)
 | EFI_HANDLE  | 8 bytes  | 8             | Handle to EFI Streams (input, output, error)
 | EFI_EVENT   | 8 bytes  | 8             | Boot-time Events (unused)
