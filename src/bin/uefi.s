@@ -4,7 +4,7 @@
 bits 64
 
 section .text
-global start
+global  start
 
 start:
     mov [ptrUEFI], rsp
@@ -22,11 +22,15 @@ start:
     call exitBootSequence
     call loadKernel
 
-; Functions not implemented yet
 getFrameBuffer:
     call locateProtocol
-    ; write some stuff to get the base address of frame buffer
-    ; call outputString
+    
+    mov  rcx, [ptrInterface]
+    mov  rcx, [rcx + EFI_GRAPHICS_OUTPUT_PROTOCOL.Mode]
+    mov  rcx, [rcx + EFI_GRAPHICS_OUTPUT_PROTOCOL_MODE.FrameBufferBase]
+ 
+    mov  [ptrFrameBuffer], rcx
+    
     ret
 
 exitBootSequence:
@@ -35,20 +39,34 @@ exitBootSequence:
     ret
 
 loadKernel:  
-    ; Write an actual kernel
+    mov  rcx, [ptrSystemTable]
+    and  rdx, 0
+ 
+    mov  r8, 2048 * 100
+    call kernelActions 
     ret
 
-section .data
-        string                      db   __utf16__ 'Hello World'
-        ptrUEFI                     dq   0
-        imageHandle                 dq   0
-        ptrSystemTable              dq   0
-        ptrInterface                dq   0
+kernelActions:
+    mov  rcx, [rcx + EFI_SYSTEM_TABLE.ConOut]
+    EFI_TEXT_ATTR rbx, EFI_BACKGROUND_BLACK, EFI_GREEN
+    mov  rcx, [rcx + EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL.SetAttribute]
 
-        intMemoryMapSize            dq   EFI_MEMORY_DESCRIPTOR_size * 1024
-        bufMemoryMap                resb EFI_MEMORY_DESCRIPTOR_size * 1024
-        ptrMemoryMapKey             dq   0
-        ptrMemoryMapDescSize        dq   0
+    call rcx
+    ret
+
+
+section .data
+        string                            db   __utf16__ 'Hello World', 13, 10, 13, 10
+        exitString                        db   __utf16__ 'Press any key to shutdown...'
+        ptrUEFI                           dq   0
+        imageHandle                       dq   0
+        ptrSystemTable                    dq   0
+        ptrInterface                      dq   0
+
+        intMemoryMapSize                  dq   EFI_MEMORY_DESCRIPTOR_size * 1024
+        bufMemoryMap                      resb EFI_MEMORY_DESCRIPTOR_size * 1024
+        ptrMemoryMapKey                   dq   0
+        ptrMemoryMapDescSize              dq   0
 
         EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID dd 0x9042a9de
                                           dd 0x23dc4a38
