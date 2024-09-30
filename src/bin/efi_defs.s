@@ -1,4 +1,3 @@
-EFI_SUCCESS             EQU 0x0
 
 %macro EFI_ERROR 2
         mov %1, 0x800000000000000
@@ -49,6 +48,9 @@ EFI_SUCCESS             EQU 0x0
         alignb 8
 %endmacro
 
+; EFI Status Codes
+EFI_SUCCESS EQU 0x0
+
 ; EFI colour definitions
 EFI_BLACK                EQU 0x00
 EFI_BLUE                 EQU 0x01
@@ -77,9 +79,9 @@ EFI_BACKGROUND_BROWN     EQU 0x60
 EFI_BACKGROUND_LIGHTGRAY EQU 0x70
 
 %macro EFI_TEXT_ATTR 3
-    mov %1, %2
-    shl %1, 4
-    or  %1, %3
+        mov %1, %2
+        shl %1, 4
+        or  %1, %3
 %endmacro
 
 
