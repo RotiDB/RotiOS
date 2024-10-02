@@ -9,7 +9,7 @@ locateProtocol:
         call [rax + EFI_BOOT_SERVICES.LocateProtocol]        
         
         cmp  rax, EFI_SUCCESS
-        jne  error
+        jne  bootServiceError
 
         ret
 
@@ -31,7 +31,7 @@ getMemoryMap:
         pop  rsp
 
         cmp  rax, EFI_SUCCESS
-        jne  error
+        jne  bootServiceError
 
         ret
 
@@ -45,10 +45,10 @@ exitBootServices:
         call [rax + EFI_BOOT_SERVICES.ExitBootServices]
 
         cmp  rax, EFI_SUCCESS
-        jne  error
+        jne  bootServiceError
         
         ret
 
-error:
+bootServiceError:
         hlt
-        jmp error
+        jmp bootServiceError
