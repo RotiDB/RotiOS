@@ -10,36 +10,26 @@
     {
       "file": "src/bin/uefi.s",
       "description": "`global start` is required to allow the linker to have an actual entry point into the code",
-      "line": 7
+      "line": 8
     },
     {
       "file": "src/bin/uefi.s",
-      "description": "**10 - 15:** \nThese lines are also directly from the UEFI Specification \n(See: [Handoff State][1])\n\nThe pointer to the subsytem is provided in `rsp`, the handle to image resources in in `rcx`, pointer to the system table is in `rdx`, so save all these to our defined memory locations\n\nWe also shift the top of stack to allow for four arguments, again, as per the spec.\n\n[1]: https://uefi.org/sites/default/files/resources/UEFI_Spec_2_10_A_Aug8.pdf#G11.1004788",
+      "description": "**11 - 16:** \nThese lines are also directly from the UEFI Specification \n(See: [Handoff State][1])\n\nThe pointer to the subsytem is provided in `rsp`, the handle to image resources in in `rcx`, pointer to the system table is in `rdx`, so save all these to our defined memory locations\n\nWe also shift the top of stack to allow for four arguments, again, as per the spec.\n\n[1]: https://uefi.org/sites/default/files/resources/UEFI_Spec_2_10_A_Aug8.pdf#G11.1004788",
       "line": 10
     },
     {
       "file": "src/bin/uefi.s",
       "description": "A thick wrapper around getting the handle to our `output` buffer. This is needed to do any kind of printing using the EFI_GRAPHICS_OUTPUT_PROTOCOL",
-      "line": 25
+      "line": 26
     },
     {
       "file": "src/bin/efi_boot_services.s",
-      "description": "All functions in this file are thin wrappers around built-in EFI boot-time services",
+      "description": "This function will find the first protocol instance that matches the given protocol.\nThe function itself returns a status code, and the location of the protocol is saved to `*ptrInterface`\n\nEquivalent C code:\n```c\nEFI_SYSTEM_TABLE->BootServices->LocateProtocol(&EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, *0, **ptrInterface);\n```",
       "line": 2
     },
     {
       "file": "src/bin/efi_boot_services.s",
-      "description": "Finds the first handle in the handle database that supports the requested protocol",
-      "line": 1
-    },
-    {
-      "file": "src/bin/efi_boot_services.s",
-      "description": "**2-9:**\nThese lines are easier to understand if implemented in C code\n```c\nEFI_SYSTEM_TABLE->BootServices->LocateProtocol(&EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, *0, **ptrInterface);\n```\n\nThis function will find the first protocol instance that matches the given protocol.\nThe function itself returns a status code, and the location of the protocol is saved to `ptrInterface`\n\nThe assembly written here is just my (probably flawed) translation of this into assembly.",
-      "line": 2
-    },
-    {
-      "file": "src/bin/efi_boot_services.s",
-      "description": "Equivalent C code:\n\n```c\ngetMemoryMap(*memoryMapSize, *memoryMap, *mapKey, *descriptorSize, *descriptorVersion);\n```\n\nThis function will provide the current memory map (the entire thing).\n\nAs always, returns a status code, and the pointer to the map itself is placed in `memoryMap`, and a bunch of metadata is placed in the other ones. Interestingly, according to the spec, I have to pass the fifth argument \"on the stack\". Not entirely sure what that means, but we sure are doing it. ",
+      "description": "Equivalent C code:\n\nAs always, returns a status code, and the pointer to the map itself is placed in `memoryMap`, and a bunch of metadata is placed in the other ones. Arguments above the fourth have to be passed on the stack, hence the `push r10`\n\n```c\ngetMemoryMap(*memoryMapSize, *memoryMap, *mapKey, *descriptorSize, *descriptorVersion);\n```",
       "line": 16
     },
     {
@@ -82,6 +72,5 @@
       "description": "These are EFI Runtime services, they will remain available even after control is passed to a kernel.",
       "line": 166
     }
-  ],
-  "ref": "main"
+  ]
 }
