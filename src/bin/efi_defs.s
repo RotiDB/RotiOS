@@ -20,26 +20,26 @@
 %endmacro
 
 %macro INT32 0
-        resd 0x1
+        resd   0x1
         alignb 0x4
 %endmacro
 
 %macro CHAR16 0
-        resw 0x1
+        resw   0x1
         alignb 0x2
 %endmacro
 
 %macro BOOLEAN 0
-        resb 0x1
+        resb   0x1
 %endmacro
 
 %macro VOIDPOINTER 0
-        resq 0x1
+        resq   0x1
         alignb 0x8
 %endmacro
 
 %macro EFI_HANDLE 0
-        resq 0x1
+        resq   0x1
         alignb 0x8
 %endmacro
 
@@ -47,6 +47,11 @@
         resq 0x1
         alignb 8
 %endmacro
+
+%macro pCHAR16 0
+        resq   0x1
+        alignb 0x8
+%endmacro 
 
 ; EFI Status Codes
 EFI_SUCCESS EQU 0x0
@@ -84,7 +89,6 @@ EFI_BACKGROUND_LIGHTGRAY EQU 0x70
         or  %1, %3
 %endmacro
 
-
 struc EFI_TABLE_HEADER
         .Signature:                             UINT64
         .Revison:                               UINT32
@@ -100,7 +104,7 @@ endstruc
 %define EFI_SYSTEM_TABLE_SIGNATURE 0x5453595320494249
 struc EFI_SYSTEM_TABLE
         .Hdr:                                   HDRSIZE
-        .FirmwareVendor:                        CHAR16
+        .FirmwareVendor:                        pCHAR16
         .FirmwareRevision:                      UINT32
         .ConsoleInHandle:                       EFI_HANDLE
         .ConIn:                                 VOIDPOINTER

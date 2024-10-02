@@ -1,56 +1,53 @@
-bits 64
+locateProtocol:
+        mov  rax, [systemTable]
+        mov  rax, [rax + EFI_SYSTEM_TABLE.BootServices]
+        
+        mov  rcx, EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID
+        mov  rdx, 0
+        lea  r8, [ptrInterface]
 
-verifySignature:
-        mov rax, [ptrSystemTable]
-        mov rax, [rax + EFI_SYSTEM_TABLE.Hdr + EFI_TABLE_HEADER.Signature]
-
-        mov rbx, EFI_SYSTEM_TABLE_SIGNATURE
-        EFI_ERROR rcx, 1
-        cmp rcx, rax
-        jne error
-
-        mov rcx, EFI_SUCCESS
+        call [rax + EFI_BOOT_SERVICES.LocateProtocol]        
+        
+        cmp  rax, EFI_SUCCESS
+        jne  error
 
         ret
 
 getMemoryMap:
-        mov rax, [ptrSystemTable]
-        mov rax, [rax + EFI_SYSTEM_TABLE.BootServices]
-        lea r8, [bufMemoryMap]
-        lea r9, [ptrMemoryMapKey]
+        mov  rax, [systemTable]
+        mov  rax, [rax + EFI_SYSTEM_TABLE.BootServices]
+ 
+        lea  rcx, [memoryMapSize]
+        lea  rdx, [memoryMap]
+        lea  r8,  [mapKey]
+        lea  r9,  [descriptorSize]
+        lea  r10, [descriptorVersion]
+        push rsp
+        push r10
 
         call [rax + EFI_BOOT_SERVICES.GetMemoryMap]
 
-        cmp rax, EFI_SUCCESS
-        jne error
+        pop  r10
+        pop  rsp
 
-locateProtocol:
-        mov rax, [ptrSystemTable]
-        mov rax, [rax + EFI_SYSTEM_TABLE.BootServices]
-
-        mov rbx, EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID
-
-        mov rcx, 0
-        lea r8, [ptrInterface]
-
-        call [rax + EFI_BOOT_SERVICES.LocateProtocol]
-        
-        cmp rax, EFI_SUCCESS
-        jne error
+        cmp  rax, EFI_SUCCESS
+        jne  error
 
         ret
 
 exitBootServices:
-        mov rax, [ptrSystemTable]
-        mov rax, [rax + EFI_SYSTEM_TABLE.BootServices]
-
-        mov rcx, [imageHandle]
-        mov rdx, [ptrMemoryMapKey]
-
+        mov  rax, [systemTable]
+        mov  rax, [rax + EFI_SYSTEM_TABLE.BootServices]
+ 
+        mov  rcx, [imageHandle]
+        mov  rdx, [mapKey]
+ 
         call [rax + EFI_BOOT_SERVICES.ExitBootServices]
 
-        cmp rax, EFI_SUCCESS
-        jne error
+        cmp  rax, EFI_SUCCESS
+        jne  error
+        
+        ret
 
 error:
         hlt
