@@ -9,6 +9,16 @@
         alignb 0x8
 %endmacro
 
+%macro UINT8 0
+        resb 0x1
+        alignb 1
+%endmacro
+
+%macro UINT16 0
+        resw 0x1
+        alignb 2
+%endmacro
+
 %macro UINT32 0
         resd 0x1
         alignb 0x4
@@ -83,7 +93,8 @@ EFI_BACKGROUND_MAGENTA   EQU 0x50
 EFI_BACKGROUND_BROWN     EQU 0x60
 EFI_BACKGROUND_LIGHTGRAY EQU 0x70
 
-%macro EFI_TEXT_ATTR 3
+; Use as EFI_TEXT_ATTR rcx, ,<background>, <foreground> 
+%macro EFI_TEXT_ATTR 3 
         mov %1, %2
         shl %1, 4
         or  %1, %3

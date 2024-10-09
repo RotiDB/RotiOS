@@ -22,14 +22,11 @@ getMemoryMap:
         lea  r8,  [mapKey]
         lea  r9,  [descriptorSize]
         lea  r10, [descriptorVersion]
-        push rsp
         push r10
-
+        
         call [rax + EFI_BOOT_SERVICES.GetMemoryMap]
-
+        
         pop  r10
-        pop  rsp
-
         cmp  rax, EFI_SUCCESS
         jne  bootServiceError
 

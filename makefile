@@ -6,12 +6,7 @@ PADDING   := 256k
 SRC       := $(notdir $(wildcard $(SRC_DIR)/*))
 BUILD     := $(notdir $(wildcard $(BUILD_DIR)/*))
 
-all:
-	@echo "Build for BIOS using 'make bios' or UEFI using 'make uefi'"
-
-.PHONY: all clean info bios uefi
-
-uefi: $(wildcard $(SRC_DIR)/*)
+all: $(wildcard $(SRC_DIR)/*)
 	@mkdir -p $(BUILD_DIR)
 
 	$(ASM) $(SRC_DIR)/uefi.s ${NASMFLAGS} -o \
@@ -20,6 +15,8 @@ uefi: $(wildcard $(SRC_DIR)/*)
 	cp ${BUILD_DIR}/uefi.bin ${BUILD_DIR}/uefi.img
 
 	truncate -s ${PADDING} ${BUILD_DIR}/uefi.img
+
+.PHONY: all clean info bios	
 	
 bios:
 	@mkdir -p $(BUILD_DIR)
@@ -35,8 +32,11 @@ clean:
 	rm -rvf $(BUILD_DIR)
 
 info:
-	@echo "[*] Source dir:   ${SRC_DIR}/        "
+	@echo "[*] Source dir:   ${SRC_DIR}/       "
 	@echo "[*] Contents:     ${SRC}			   "
 	@echo "------------------------------------"
-	@echo "[*] Build dir:    ${BUILD_DIR}/      "
+	@echo "[*] Build dir:    ${BUILD_DIR}/     "
 	@echo "[*] Contents:     ${BUILD}          "
+	@echo "------------------------------------"
+	@echo "[*] Hexdump: 					   "
+	@xxd -a $(BUILD_DIR)/uefi.bin

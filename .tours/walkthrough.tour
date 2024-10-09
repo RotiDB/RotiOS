@@ -29,7 +29,7 @@
     },
     {
       "file": "src/bin/efi_boot_services.s",
-      "description": "Equivalent C code:\n\nAs always, returns a status code, and the pointer to the map itself is placed in `memoryMap`, and a bunch of metadata is placed in the other ones. Arguments above the fourth have to be passed on the stack, hence the `push r10`\n\n```c\ngetMemoryMap(*memoryMapSize, *memoryMap, *mapKey, *descriptorSize, *descriptorVersion);\n```",
+      "description": "As always, returns a status code, and the pointer to the map itself is placed in `memoryMap`, and a bunch of metadata is placed in the other ones. Arguments above the fourth have to be passed on the stack, hence the `push r10`\n\nEquivalent C code:\n```c\nEFI_SYSTEM_TABLE->BootServices->getMemoryMap(&memoryMapSize, &memoryMap, &mapKey, &descriptorSize, &descriptorVersion);\n```",
       "line": 16
     },
     {
@@ -50,7 +50,7 @@
     {
       "file": "src/bin/efi_defs.s",
       "description": "A macro to define the EFI_TEXT_ATTRIBUTE field, basically does this:\n```c\nshort attribute = (foreground | background << 4)\n```",
-      "line": 81
+      "line": 92
     },
     {
       "file": "src/bin/efi_defs.s",

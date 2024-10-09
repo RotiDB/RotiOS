@@ -11,14 +11,13 @@ clearScreen:
     ret
 
 outputString:    
-    mov  rdx, rcx
     mov  rcx, [systemTable]
     mov  rcx, [rax + EFI_SYSTEM_TABLE.ConOut]
 
     call [rcx + EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL.OutputString]
 
     cmp  rax, EFI_SUCCESS
-    jne  textOutputError
+    jne  textOutputError 
     ret
 
 textOutputError:

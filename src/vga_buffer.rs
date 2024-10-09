@@ -1,6 +1,10 @@
+// Allow unused components to exist in the memory 
 #![allow(unused)]
+
 #[derive(Debug, Clone, PartialEq, Eq)]
+// Map enum integers to unsigned 8 bit integer
 #[repr(u8)]
+
 pub enum Color {
     Black      = 0x0,
     Blue       = 0x1,
@@ -26,7 +30,7 @@ struct ColorCode(u8);
 
 impl ColorCode {
     fn new(foreground: Color, background: Color) -> Self {
-        Self((background  as u8) << 4 | foreground as u8)
+        Self((background  as u8) << 4 | foreground as u8) // 02
     }
 }
 
@@ -81,7 +85,7 @@ impl Writer {
                 }
                 
                 self.buffer.chars[BUFFER_HEIGHT - 1][BUFFER_WIDTH] = Screen {
-                    ascii_char: byte,
+                    ascii_char: other,
                     color: self.color_code
                 };
 
@@ -89,7 +93,7 @@ impl Writer {
             } 
         }
     }
-
+    
     fn newline(&mut self) {
         todo!();
     }
