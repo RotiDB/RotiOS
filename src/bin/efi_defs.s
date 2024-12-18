@@ -9,6 +9,11 @@
         alignb 0x8
 %endmacro
 
+%macro UINT16 0
+        resw 0x1
+        alignb 0x2
+%endmacro
+
 %macro UINT32 0
         resd 0x1
         alignb 0x4
